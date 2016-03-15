@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.3.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.5.RELEASE")
     }
 }
 
@@ -25,19 +25,25 @@ targetCompatibility = 1.8
 
 dependencies {
     compile 	"org.springframework.boot:spring-boot-starter-web:1.2.5.RELEASE",
-    		"org.apache.httpcomponents:httpclient:4.4",
+    			"org.apache.httpcomponents:httpclient:4.4",
+				"org.springframework:spring-context-support",     //ehcacheÐèÒª
+         		"net.sf.ehcache:ehcache:2.10.0",
+         		"org.springframework.data:spring-data-mongodb:1.7.2.RELEASE",
             	"org.apache.httpcomponents:httpasyncclient:4.0.2",
-		"com.fasterxml.jackson.core:jackson-databind:2.6.1",
-		"com.alibaba:fastjson:1.2.7",
-		'com.google.code.gson:gson:2.2.2',
-           	 'org.scalatra.socketio-java:socketio-core:2.0.0',
-           	 'org.json:org.json:chargebee-1.0',
-           	 'com.github.nkzawa:socket.io-client:0.3.0',
-           	 'org.mongodb:mongo-java-driver:2.12.0',
-          	  'com.corundumstudio.socketio:netty-socketio:1.6.0',
-		"org.projectlombok:lombok:1.16.6";
+				"com.fasterxml.jackson.core:jackson-databind:2.6.1",
+				"com.alibaba:fastjson:1.2.7",
+				'com.google.code.gson:gson:2.2.2',
+           		'org.scalatra.socketio-java:socketio-core:2.0.0',
+           	 	'org.json:org.json:chargebee-1.0',
+           	 	'com.github.nkzawa:socket.io-client:0.3.0',
+           	 	'org.mongodb:mongo-java-driver:2.12.0',
+          	  	'com.corundumstudio.socketio:netty-socketio:1.6.0',
+          	  	"org.projectlombok:lombok:1.16.6",
+				"org.projectlombok:lombok:1.16.6";
    	compile fileTree(dir: 'libs', include: ['*.jar'])
-   	testCompile "junit:junit:4.12"
+   	testCompile "junit:junit",
+   				"org.springframework.boot:spring-boot-starter-test",
+    			"org.springframework:spring-test"
 }
 
 task wrapper(type: Wrapper) {
