@@ -13,6 +13,9 @@ public class EntrustTest extends AbstractTests{
 	public void test() throws Exception {
 		//fail("Not yet implemented");
 		entrustService.buyOrder("1234", "0.001");
+//		entrustService.getAccountInfo();
+//		entrustService.canceOrder("");
+//		entrustService.getOrders();
 	}
 
 }
