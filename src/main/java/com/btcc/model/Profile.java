@@ -1,9 +1,14 @@
 package com.btcc.model;
 
+import org.springframework.data.annotation.Id;
+
 import lombok.Data;
 
 @Data
 public class Profile {
+	@Id
+	private String id;
+	
 	private String username;
 	private boolean trade_password_enabled;
 	private boolean otp_enabled;

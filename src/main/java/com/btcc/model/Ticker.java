@@ -1,9 +1,13 @@
 package com.btcc.model;
 
+import org.springframework.data.annotation.Id;
+
 import lombok.Data;
 
 @Data
 public class Ticker {
+	@Id
+	private String id;
 	public String open;
 	private String vwap;
 	private String vol;

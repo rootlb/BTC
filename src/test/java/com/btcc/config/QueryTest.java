@@ -11,11 +11,12 @@ import com.btcc.utils.PurchaseOrderSample;
 public class QueryTest extends AbstractTests{
 	
 	@Autowired
-	QueryService queryService;
+	private QueryService queryService;
 	@Test
 	public void test() throws Exception {
 		PurchaseOrderSample purchaseOrderSample = new PurchaseOrderSample();
-		//purchaseOrderSample.getPurchaseOrders();
+//		purchaseOrderSample.getPurchaseOrders();
+		queryService.queryTicker();
 	}
 
 }

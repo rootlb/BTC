@@ -3,18 +3,24 @@ package com.btcc.service.impl;
 import java.net.URISyntaxException;
 
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.btcc.dao.TickerDao;
 import com.btcc.model.BTC;
 import com.btcc.model.Ticker;
 import com.btcc.model.Trade;
 import com.btcc.service.QueryService;
 import com.btcc.utils.ClienUtil;
+import com.btcc.utils.StringToDoubleUtil;
 import com.github.nkzawa.emitter.Emitter;
 import com.google.gson.Gson;
 
 @Service
 public class QueryServiceImpl implements QueryService{
+	@Autowired
+	private TickerDao tickerDao;
+	
 	private BTC btc = new BTC();
 	private Trade trade = new Trade();
 	private ClienUtil clienUtil = new ClienUtil();
@@ -28,7 +34,9 @@ public class QueryServiceImpl implements QueryService{
 				   btc = gson.fromJson(json.toString(), BTC.class);
 				   long start = System.currentTimeMillis();
 				  long temp = System.currentTimeMillis();
-				   System.out.println("buy: "+btc.getTicker().getBuy()+"£¤"+"    ºÄÊ±:"+(temp-start));	
+				   System.out.println("buy: "+btc.getTicker().getBuy()+"£¤"+"    ºÄÊ±:"+(temp-start));
+				   tickerDao.save(btc.getTicker());
+				   
 			} 
 		});
 	}
@@ -73,7 +81,7 @@ public class QueryServiceImpl implements QueryService{
 		
 	}
 	
-	public static void main(String arge[]) throws URISyntaxException{
-		new QueryServiceImpl().queryTrade();
-	}
+//	public static void main(String arge[]) throws URISyntaxException{
+//		new QueryServiceImpl().queryTicker();
+//	}
 }

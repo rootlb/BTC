@@ -14,8 +14,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.btcc.model.AccountInfoResponse;
+import com.btcc.model.BuyResponse;
 import com.btcc.model.CancelResponse;
 import com.btcc.model.Order;
+import com.btcc.model.OrderResponse;
+import com.btcc.model.SellResponse;
 import com.btcc.service.EntrustService;
 import com.btcc.utils.SignatureUtil;
 import com.google.gson.Gson;
@@ -63,30 +66,30 @@ public class EntrustServiceImpl implements EntrustService{
 }
 	
 	@Override
-	public Order buyOrder(String price, String amount) throws Exception {
+	public BuyResponse buyOrder(String price, String amount) throws Exception {
         String tonce = ""+(System.currentTimeMillis() * 1000);
         String params = "tonce="+tonce.toString()+"&accesskey="+ACCESS_KEY+"&requestmethod=post&id=1&method=buyOrder2&params="+price+","+amount;
         String postdata = "{\"method\": \"buyOrder2\", \"params\": [\""+price+"\",\""+amount+"\"], \"id\": 1}";
         StringBuffer response = request(params,postdata);
         Gson gson = new Gson();
-        Order order = new Order();
-        order = gson.fromJson(response.toString(), Order.class);
+        BuyResponse buyResponse = new BuyResponse();
+        buyResponse = gson.fromJson(response.toString(), BuyResponse.class);
         System.out.println(response.toString());
-        return order;
+        return buyResponse;
 	}
 
 	@Override
-	public Order sellOrder(String price, String amount) throws Exception {
+	public SellResponse sellOrder(String price, String amount) throws Exception {
 		 	String tonce = ""+(System.currentTimeMillis() * 1000);
 	        String params = "tonce="+tonce.toString()+"&accesskey="+ACCESS_KEY+"&requestmethod=post&id=1&method=sellOrder2&params="+price+","+amount;
 	        String postdata = "{\"method\": \"sellOrder2\", \"params\": [\""+price+"\",\""+amount+"\"], \"id\": 1}";
 	        StringBuffer response = request(params,postdata);
 	        //print result
 	        Gson gson = new Gson();
-	        Order order = new Order();
-	        order = gson.fromJson(response.toString(), Order.class);
-	        System.out.println(order.getResult());
-	        return order;
+	        SellResponse sellResponse = new SellResponse();
+	        sellResponse = gson.fromJson(response.toString(), SellResponse.class);
+	        System.out.println(sellResponse.getResult());
+	        return sellResponse;
 	    	
 	}
 	
@@ -107,8 +110,8 @@ public class EntrustServiceImpl implements EntrustService{
 	@Override
 	public boolean canceOrder(String id) throws Exception {
 		String tonce = ""+(System.currentTimeMillis() * 1000);
-        String params = "tonce="+tonce.toString()+"&accesskey="+ACCESS_KEY+"&requestmethod=post&id=470201928&method=cancelOrder&params=2";
-        String postdata = "{\"method\": \"cancelOrder\", \"params\": [2], \"id\": 470201928}";
+        String params = "tonce="+tonce.toString()+"&accesskey="+ACCESS_KEY+"&requestmethod=post&id=1&method=cancelOrder&params="+id;
+        String postdata = "{\"method\": \"cancelOrder\", \"params\": ["+id+"], \"id\": 1}";
         StringBuffer response = request(params,postdata);
         //print result
         Gson gson = new Gson();
@@ -121,14 +124,14 @@ public class EntrustServiceImpl implements EntrustService{
 	@Override
 	public ArrayList<Order> getOrders() throws Exception {
 		String tonce = ""+(System.currentTimeMillis() * 1000);
-		String params = "tonce="+tonce.toString()+"&accesskey="+ACCESS_KEY+"&requestmethod=post&id=1&method=getOrders&params=true";
-		String postdata = "{\"method\": \"getOrders\", \"params\": [true], \"id\": 1}";
+		String params = "tonce="+tonce.toString()+"&accesskey="+ACCESS_KEY+"&requestmethod=post&id=1&method=getOrders&params=false,BTCCNY,1";
+		String postdata = "{\"method\": \"getOrders\", \"params\": [false,\"BTCCNY\",1], \"id\": 1}";
         StringBuffer response = request(params,postdata);
         Gson gson = new Gson();
-//        CancelResponse cancelResponse = new CancelResponse();
-//        cancelResponse = gson.fromJson(response.toString(), CancelResponse.class);
-        System.out.println(response.toString());
-        return null;
+        OrderResponse orderResponse = new OrderResponse();
+        orderResponse = gson.fromJson(response.toString(), OrderResponse.class);
+        System.out.println(orderResponse.toString());
+        return orderResponse.getResult().getOrder();
 	}
 
 }
